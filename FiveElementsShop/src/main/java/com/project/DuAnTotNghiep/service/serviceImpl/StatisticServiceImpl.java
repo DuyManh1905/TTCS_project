@@ -166,6 +166,7 @@ public class StatisticServiceImpl implements StatisticService {
 
     @Override
     public List<BestSellerProduct> getBestSellerProduct(String fromDate, String toDate) {
+    	System.out.println(fromDate+"   "+toDate);
         return productRepository.getBestSellerProduct(fromDate, toDate);
     }
 

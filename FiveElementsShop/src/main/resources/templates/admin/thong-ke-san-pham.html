@@ -68,7 +68,7 @@
                             <th scope="col">Nhãn hiệu</th>
                             <th scope="col">Loại</th>
                             <th scope="col">Số lượng bán</th>
-                            <th scope="col">Số lượng đổi trả</th>
+ <!--                             <th scope="col">Số lượng đổi trả</th>  -->
                             <th scope="col">Doanh thu</th>
                         </tr>
                         </tr>
@@ -222,7 +222,6 @@
                         <td>${product.brand}</td>
                         <td>${product.category}</td>
                         <td>${product.totalQuantity}</td>
-                        <td>${product.totalQuantityReturn}</td>
                         <td>${price}</td>
                     </tr>`
                 })
@@ -334,6 +333,7 @@
             //
 
             callApiGetBestSellerAll()
+            
             function loadDonutCharBestSeller(labelList, dataList) {
                 let chartStatus = Chart.getChart("donut-best-seller"); // <canvas> id
                 if (chartStatus != undefined) {
@@ -373,6 +373,7 @@
             }
 
             function callApiGetBestSellerAll() {
+            	console.log('da goi dong 376')
                  $.ajax({
                     type: 'GET',
                     dataType: 'json',
@@ -409,36 +410,42 @@
             }
 
             $('#best-seller-time-select').on('change', function () {
+            	
                 var value = $(this).val()
                 var currentDate = new Date();
                 if(value == "") {
                     callApiGetBestSellerAll()
                 }
-                if(value == 7) {
+                if(value == 7) { 	
                     var sevenDaysAgo = new Date();
                     sevenDaysAgo.setDate(currentDate.getDate() - 7);
-                    callApiGetBestSellerInTime(formatToYYYYMMDD(sevenDaysAgo), formatToYYYYMMDD(new Date(currentDate.getDate() + 1)))
+                    var nowday = new Date();
+                    callApiGetBestSellerInTime(formatToYYYYMMDD(sevenDaysAgo), formatToYYYYMMDD(nowday))
                 }
 
                 if(value == 15) {
-                    var sevenDaysAgo = new Date();
-                    sevenDaysAgo.setDate(currentDate.getDate() - 15);
-                    callApiGetBestSellerInTime(formatToYYYYMMDD(sevenDaysAgo), formatToYYYYMMDD(new Date(currentDate.getDate() + 1)))
+                    var sevenDaysAgo2 = new Date();
+                    sevenDaysAgo2.setDate(currentDate.getDate() - 15);
+                    var nowday = new Date();
+                    callApiGetBestSellerInTime(formatToYYYYMMDD(sevenDaysAgo2), formatToYYYYMMDD(nowday))
                 }
 
                 if(value == 30) {
-                    var sevenDaysAgo = new Date();
-                    sevenDaysAgo.setDate(currentDate.getDate() - 30);
-                    callApiGetBestSellerInTime(formatToYYYYMMDD(sevenDaysAgo), formatToYYYYMMDD(new Date(currentDate.getDate() + 1)))
+                    var sevenDaysAgo3 = new Date();
+                    sevenDaysAgo3.setDate(currentDate.getDate() - 30);
+                    var nowday = new Date();
+                    callApiGetBestSellerInTime(formatToYYYYMMDD(sevenDaysAgo3), formatToYYYYMMDD(nowday))
                 }
             })
 
             async function callApiGetBestSellerInTime(fromDate, toDate) {
+            	console.log('da goi dong 440')
                 await $.ajax({
                     type: 'GET',
                     dataType: 'json',
                     url: `/api/get-bestseller-product-time?fromDate=${fromDate}&toDate=${toDate}`,
                     success: function (data) {
+                    	console.log(data)
                         loadHtmlBestSeller(data)
                         var lableList = []
                         var dataList = []
@@ -463,12 +470,19 @@
                 }
             };
 
+            //function formatToYYYYMMDD(date) {
+            //    var yyyy = date.getFullYear().toString();
+            //    var mm = (date.getMonth() + 1).toString().padStart(2, '0');
+            //    var dd = date.getDate().toString().padStart(2, '0');
+            //    return yyyy + '-' + mm + '-' + dd;
+            //}
+            
             function formatToYYYYMMDD(date) {
-                var yyyy = date.getFullYear().toString();
-                var mm = (date.getMonth() + 1).toString().padStart(2, '0');
-                var dd = date.getDate().toString().padStart(2, '0');
-                return yyyy + '-' + mm + '-' + dd;
-            }
+			    const year = date.getFullYear();
+			    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+			    const day = date.getDate().toString().padStart(2, '0');
+    			return `${year}-${month}-${day}`;
+			}
             function formatNumber(number) {
                 return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
             }

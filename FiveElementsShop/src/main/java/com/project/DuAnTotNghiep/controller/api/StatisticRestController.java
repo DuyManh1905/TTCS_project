@@ -54,7 +54,10 @@ public class StatisticRestController {
 
     @GetMapping("/api/get-bestseller-product-time")
     private List<BestSellerProduct> getBestSellerProductTime(@RequestParam String fromDate, @RequestParam String toDate) {
-        return statisticService.getBestSellerProduct(fromDate, toDate);
+    	System.out.println("dong 57 statistic");
+    	List<BestSellerProduct> x = statisticService.getBestSellerProduct(fromDate, toDate);
+    	System.out.println(x.size());
+    	return x;
     }
 
     @GetMapping("/get-statistic-user-by-month")

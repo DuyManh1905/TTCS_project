@@ -61,12 +61,23 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
             "            group by p.id, p.code, p.name, brand.name, cat.name order by totalQuantity DESC", nativeQuery = true)
     List<BestSellerProduct> getBestSellerProduct();
 
-    @Query(value = "SELECT top(10)  p.id, p.code, p.name, (SELECT top(1) image.link FROM image WHERE image.product_id = p.id) as imageUrl , brand.name as brand, cat.name as category, COALESCE(SUM(bd.quantity),0) AS totalQuantity, COALESCE(SUM(bd.return_quantity),0) AS totalQuantityReturn, SUM(bd.quantity * bd.moment_price) as revenue\n" +
-            "             from bill b join bill_detail bd on b.id = bd.bill_id join product_detail pd on pd.id = bd.product_detail_id \n" +
-            "            join product p on p.id = pd.product_id left join bill_return br on br.bill_id = b.id\n" +
-            "            join brand on brand.id = p.brand_id join category cat on cat.id = p.category_id\n" +
-            "            where b.status = 'HOAN_THANH' and b.create_date BETWEEN :fromDate AND :toDate \n" +
-            "            group by p.id, p.code, p.name, brand.name, cat.name order by totalQuantity DESC", nativeQuery = true)
+    @Query(value = "SELECT TOP 10 p.id, p.code, p.name, " +
+            "(SELECT TOP 1 image.link FROM image WHERE image.product_id = p.id) AS imageUrl, " +
+            "brand.name AS brand, cat.name AS category, " +
+            "COALESCE(SUM(bd.quantity), 0) AS totalQuantity, " +
+            "COALESCE(SUM(bd.return_quantity), 0) AS totalQuantityReturn, " +
+            "SUM(bd.quantity * bd.moment_price) AS revenue " +
+            "FROM bill b " +
+            "JOIN bill_detail bd ON b.id = bd.bill_id " +
+            "JOIN product_detail pd ON pd.id = bd.product_detail_id " +
+            "JOIN product p ON p.id = pd.product_id " +
+            "LEFT JOIN bill_return br ON br.bill_id = b.id " +
+            "JOIN brand ON brand.id = p.brand_id " +
+            "JOIN category cat ON cat.id = p.category_id " +
+            "WHERE b.status = 'HOAN_THANH' " +
+            "AND b.create_date BETWEEN :fromDate AND :toDate " +
+            "GROUP BY p.id, p.code, p.name, brand.name, cat.name " +
+            "ORDER BY totalQuantity DESC", nativeQuery = true)
     List<BestSellerProduct> getBestSellerProduct(String fromDate, String toDate);
 
 //    @Query(value = "SELECT  p.id, p.code, p.name, COALESCE(SUM(bd.quantity),0) AS totalQuantity, COALESCE(SUM(bd.return_quantity),0) AS totalQuantityReturn, SUM(bd.quantity * bd.moment_price) as revenue\n" +
