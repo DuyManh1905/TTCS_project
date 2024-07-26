@@ -2,14 +2,10 @@ package com.project.DuAnTotNghiep.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -26,35 +22,7 @@ public class WebSecurityConfig {
     }
 
 
-//    @Configuration
-//    @Order(1)
-//    public static class App1ConfigurationAdapter {
-//        @Bean
-//        public SecurityFilterChain filterChainApp1(HttpSecurity http) throws Exception {
-//            http.csrf().disable().antMatcher("/admin/**").authorizeRequests()
-//                    .antMatchers("/admin/**")
-//                    .hasAnyRole("ADMIN", "EMPLOYEE")
-//                    .antMatchers("/admin-login").permitAll()
-//                    .and()
-//                    .formLogin()
-//                    .loginPage("/admin-login").loginProcessingUrl("/admin/admin_login")
-//                    .usernameParameter("email")
-//                    .defaultSuccessUrl("/admin")
-//                    .and()
-//                    .logout()
-//                    .logoutUrl("/admin/admin_logout").
-//                    logoutSuccessUrl("/admin-login").
-//                    permitAll()
-//                    .and()
-//                    .rememberMe()
-//                    .and().rememberMe()
-//                    .key("AbcDefgHijklmnOp_123456789")
-//                    .rememberMeParameter("rememberme")
-//                    .tokenValiditySeconds(7 * 24 * 60 * 60);
-//            http.headers().frameOptions().disable();
-//            return http.build();
-//        }
-//    }
+
 
 
     @Configuration

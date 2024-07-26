@@ -52,6 +52,10 @@ public class AuthController {
         return "user/forgot-pass";
     }
 
+    
+    
+    
+    // done
     @GetMapping("/register")
     public String register(Model model,@ModelAttribute("Account") Account account){
         return "user/register";
@@ -111,6 +115,10 @@ public class AuthController {
             redirectAttributes.addFlashAttribute("success", "Đăng ký tài khoản thành công");
             return "redirect:/user-login";
         }
+    
+    
+    
+    
 
         @PostMapping("/reset-page")
         public String viewResetPassPage(@RequestParam String email, RedirectAttributes redirectAttributes) throws MessagingException {

@@ -51,6 +51,7 @@ public class ShoppingCartController {
         cartService.addToCart(cartDto);
     }
 
+    
     @ResponseBody
     @PostMapping("/api/deleteCart/{id}")
     public void deleteCart(@PathVariable Long id) {

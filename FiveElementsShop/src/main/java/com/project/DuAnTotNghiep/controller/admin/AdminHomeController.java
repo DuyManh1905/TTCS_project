@@ -40,6 +40,6 @@ public class  AdminHomeController {
         model.addAttribute("totalProduct", productDtos.getTotalElements());
         model.addAttribute("revenue", billRepository.calculateTotalRevenue());
         model.addAttribute("totalBillWaiting", billRepository.getTotalBillStatusWaiting());
-        return "/admin/index";
+        return "admin/index";
     }
 }
